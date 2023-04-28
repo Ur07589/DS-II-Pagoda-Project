@@ -2,8 +2,7 @@ from timeit import default_timer as timer
 
 class Node:
     def __init__(self, val):
-        self.YoutubeViews = val.YoutubeViews
-        self.Track=val
+        self.trackobj=val
         self.left = None
         self.right = None
 
@@ -12,7 +11,8 @@ class PagodaClass:
         self.root = None
         
     def isEmpty(self):
-        return self.root == None
+        if self.root == None:
+            print(True)
         
     def clear(self):
         self.root = None
@@ -38,7 +38,7 @@ class PagodaClass:
             newnode.left = None
             r = None
             while botroot != None and botnew != None:
-                if botroot.YoutubeViews < botnew.YoutubeViews:
+                if botroot.trackobj.YoutubeViews < botnew.trackobj.YoutubeViews:
                     temp = botroot.right
                     if r == None:
                         botroot.right = botroot
@@ -73,18 +73,18 @@ class PagodaClass:
             print("Empty")
             return None
         else:
-            if queue.left == queue:
+            if queue.left.trackobj.YoutubeViews == queue.trackobj.YoutubeViews:
                 l = None
             else:
                 l = queue.left
-                while l.left != queue:
+                while l.left.trackobj.YoutubeViews != queue.trackobj.YoutubeViews:
                     l = l.left
                 l.left = queue.left
-            if queue.right == queue:
+            if queue.right.trackobj.YoutubeViews == queue.trackobj.YoutubeViews:
                 r = None
             else:
                 r = queue.right
-                while r.right != queue:
+                while r.right.trackobj.YoutubeViews != queue.trackobj.YoutubeViews:
                     r = r.right
                 r.right = queue.right
             return self._merge(l, r)
@@ -92,8 +92,3 @@ class PagodaClass:
     def printRoot(self):
         if self.root != None:
             print(self.root.data)
-
-    def findextremes(self,e):
-        if e==1:
-            return self.root
-

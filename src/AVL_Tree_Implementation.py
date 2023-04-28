@@ -1,8 +1,9 @@
 import sys
 # Create a tree node
 class TreeNode(object):
-    def __init__(self, key):
-        self.key = key
+    def __init__(self, data):
+        self.data = data
+        self.YoutubeViews = data[6]
         self.left = None
         self.right = None
         self.height = 1
@@ -15,7 +16,7 @@ class AVLTree(object):
         # Find the correct location and insert the node
         if not root:
             return TreeNode(key)
-        elif key < root.key:
+        elif key < root.YoutubeViews:
             root.left = self.insert_node(root.left, key)
         else:
             root.right = self.insert_node(root.right, key)
@@ -26,14 +27,14 @@ class AVLTree(object):
         # Update the balance factor and balance the tree
         balanceFactor = self.getBalance(root)
         if balanceFactor > 1:
-            if key < root.left.key:
+            if key < root.left.YoutubeViews:
                 return self.rightRotate(root)
             else:
                 root.left = self.leftRotate(root.left)
                 return self.rightRotate(root)
 
         if balanceFactor < -1:
-            if key > root.right.key:
+            if key > root.right.YoutubeViews:
                 return self.leftRotate(root)
             else:
                 root.right = self.rightRotate(root.right)
@@ -47,9 +48,9 @@ class AVLTree(object):
         # Find the node to be deleted and remove it
         if not root:
             return root
-        elif key < root.key:
+        elif key < root.YoutubeViews:
             root.left = self.delete_node(root.left, key)
-        elif key > root.key:
+        elif key > root.YoutubeViews:
             root.right = self.delete_node(root.right, key)
         else:
             if root.left is None:
@@ -62,14 +63,12 @@ class AVLTree(object):
                 return temp
             temp = self.getMinValueNode(root.right)
             root.key = temp.key
-            root.right = self.delete_node(root.right,
-                                          temp.key)
+            root.right = self.delete_node(root.right,temp.key)
         if root is None:
             return root
 
         # Update the balance factor of nodes
-        root.height = 1 + max(self.getHeight(root.left),
-                              self.getHeight(root.right))
+        root.height = 1 + max(self.getHeight(root.left),self.getHeight(root.right))
 
         balanceFactor = self.getBalance(root)
 
